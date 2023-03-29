@@ -1,0 +1,30 @@
+.result .card-body {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.result .card-body>div{
+  border-radius: .5rem;
+  padding: 1rem;
+}
+.result .card-body>div:hover{
+  box-shadow: 0 2px 8px -5px rgb(96, 96, 96);
+}
+
+.result .card-body>div h3{
+  font-size: 1rem;
+}
+.result .card-body>div p{
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.nickname p{
+  text-align: left !important;
+  font-weight: bold;
+}
+input:disabled:-webkit-slider-thumb{
+  background: red !important;
+  accent-color: red !important;
+}

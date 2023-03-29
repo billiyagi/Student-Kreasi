@@ -1,0 +1,102 @@
+.navlinks {
+  display: flex;
+  gap: 1rem;
+}
+
+
+.navlink {
+  padding: 0.4rem;
+  text-decoration: none;
+  font-weight: bold;
+  color: orange;
+  border-radius: .3rem;
+}
+
+.navlink:hover {
+  background-color: aliceblue;
+  text-decoration: underline;
+  transition: background-color .5s;
+}
+
+.navlink.active {
+  background-color: orange;
+  color: white;
+  min-width: fit-content;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  background: cornflowerblue;
+  padding: 1rem;
+  border-radius: .3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+h1 {
+  color: white;
+  min-width: 400px;
+  text-decoration: none;
+}
+
+a.home-link {
+  text-decoration: none;
+}
+
+
+
+.table-container {
+  overflow: auto;
+}
+
+table {
+  word-wrap: break-word;
+}
+
+thead {
+  background-color: cornflowerblue;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: rgb(239, 239, 239);
+}
+
+
+
+/* hero */
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  overflow: hidden;
+  padding: 1rem;
+}
+
+.hero .img-container {
+  max-width: 1000px;
+  min-width: 500px;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transform:rotateY(-30deg) rotateX(20deg);
+  position: relative;
+  border: cornflowerblue solid;
+  border-radius: .5rem;
+}
+.hero img{
+  max-width: 100%;
+  border-radius: inherit;
+}
+
+.hero .img-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: gainsboro;transform: translateZ(-80px);
+}
