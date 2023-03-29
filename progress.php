@@ -40,7 +40,7 @@ if (isset($_POST['assignment'])) {
         if (isset($_POST['submit'])) {
 
             $assignmentStmt = $db->query('DELETE FROM assignment WHERE id=?');
-            $assignmentStmt->bindParam(1, $_POST['id']);
+            $assignmentStmt->bindParam(1, $antiXSS->xss_clean($_POST['id']));
 
             if ($assignmentStmt->execute()) {
                 setFlashMessage('Tugas berhasil dihapus', 'success');
@@ -57,9 +57,9 @@ if (isset($_POST['assignment'])) {
     } elseif ($_POST['assignment'] == 'update') {
         if (isset($_POST['submit'])) {
             $id = $_POST['id'];
-            $title = validation($_POST['title'], false);
-            $subject = validation($_POST['subject'], false);
-            $path = validation($_POST['path'], false);
+            $title = validation($antiXSS->xss_clean($_POST['title']), false);
+            $subject = validation($antiXSS->xss_clean($_POST['subject']), false);
+            $path = validation($antiXSS->xss_clean($_POST['path']), false);
 
             // Validation
             if (($title && $subject && $path) == false) {
@@ -90,9 +90,9 @@ if (isset($_POST['assignment'])) {
          */
     } else if ($_POST['assignment'] == 'create') {
         if (isset($_POST['submit'])) {
-            $title = validation($_POST['title'], false);
-            $subject = validation($_POST['subject'], false);
-            $path = validation($_POST['path'], false);
+            $title = validation($antiXSS->xss_clean($_POST['title']), false);
+            $subject = validation($antiXSS->xss_clean($_POST['subject']), false);
+            $path = validation($antiXSS->xss_clean($_POST['path']), false);
 
             // Validation
             if (($title && $subject && $path) == false) {
