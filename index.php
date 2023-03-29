@@ -18,7 +18,8 @@ template('header');
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Billy's Assignment</h1>
                                 </div>
-                                <form class="user" method="post" action="">
+                                <?php getFlashMessage(); ?>
+                                <form class="user" method="post" action="progress.php">
                                     <div class="form-group">
                                         <input type="text" name="username" class="form-control form-control-user" id="exampleInputtext" aria-describedby="textHelp" placeholder="username">
                                     </div>
@@ -32,7 +33,7 @@ template('header');
                                                 Me</label>
                                         </div>
                                     </div>
-                                    <button type="submit" name="submit" class="btn btn-primary btn-user btn-block">
+                                    <button type="submit" name="login" class="btn btn-primary btn-user btn-block">
                                         Login
                                     </button>
                                 </form>

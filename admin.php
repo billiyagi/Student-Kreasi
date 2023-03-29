@@ -1,46 +1,6 @@
 <?php
 require_once('system/bootstrap.php');
-
-
-/** 
- * Assignment Data
- */
-
-// All assignment
-$assignmentAll = $db->query('SELECT * FROM assignment');
-$assignmentAll->execute();
-$assignments = $assignmentAll->fetchAll(PDO::FETCH_OBJ);
-
-// Single Assignment
-if (isset($_GET['data']) && $_GET['data'] == 'update_assignment') {
-    if (isset($_GET['id'])) {
-        $assignmentSingle = $db->query('SELECT * FROM assignment WHERE id = ?');
-        $assignmentSingle->execute([$_GET['id']]);
-        $assignment = $assignmentSingle->fetchObject();
-    }
-}
-
-// View Assignment Project
-if ((isset($_GET['page']) && $_GET['page'] == 'view_assignment') && isset($_GET['id'])) {
-    // Cari Id
-    $assignmentView = $db->query('SELECT * FROM assignment WHERE id = :idViewAssignment');
-    $assignmentView->bindParam('idViewAssignment', $_GET['id']);
-    $assignmentView->execute();
-    $assignmentViewProject = $assignmentView->fetchObject();
-}
-
-
-
-/** 
- * Cek halaman yang di akses
- */
-if (!isset($_GET['page'])) {
-    $pageData = ['titlePage' => 'Dashboard'];
-} else {
-    $pageData = ['titlePage' => 'Operation'];
-}
-
-
+require_once('system/operator.php');
 ?>
 
 <?php template('admin/header', $pageData); ?>
@@ -57,7 +17,7 @@ if (!isset($_GET['page'])) {
         <!-- Main Content -->
         <div id="content">
 
-            <?php template('admin/topbar'); ?>
+            <?php template('admin/topbar', ['user' => getUserSession()]); ?>
             <?php if (!isset($_GET['page'])) : ?>
 
                 <!-- Begin Page Content -->
@@ -399,6 +359,24 @@ if (!isset($_GET['page'])) {
                                 <div class="col-md-12">
                                     <h1>Cloud Page</h1>
                                 </div>
+
+
+                                <!-- Users Pages -->
+                            <?php elseif (isset($_GET['sub']) && $_GET['sub'] == 'users') : ?>
+                                <div class="col-md-12">
+                                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                        <div class="d-flex align-items-center">
+                                            <a href="admin.php?page=operation" class="btn btn-primary mr-3"><i class="fas fa-arrow-left text-white"></i></a>
+                                            <h1 class="h3 mb-0 text-gray-800">Pengguna</h1>
+                                        </div>
+                                        <a href="admin.php?page=action&data=create_assignment" class="d-none d-sm-inline-block btn btn btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50 mr-1"></i> Tambah Pengguna</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="container-fluid px-0">
+                                        <?php require_once('pages/users/index.php'); ?>
+                                    </div>
+                                </div>
                             <?php else : ?>
                                 <div class="col-md-4">
                                     <a href="admin.php?page=operation&sub=assignment" class="card border-left-primary shadow h-100 py-2">
@@ -449,7 +427,7 @@ if (!isset($_GET['page'])) {
                                     </a>
                                 </div>
                                 <div class="col-md-4 mt-4">
-                                    <a href="#" class="card border-left-info shadow h-100 py-2">
+                                    <a href="admin.php?page=operation&sub=users" class="card border-left-info shadow h-100 py-2">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
@@ -517,6 +495,8 @@ if (!isset($_GET['page'])) {
         </div>
         <!-- End of Main Content -->
 
+
+
         <!-- Footer -->
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
@@ -533,4 +513,21 @@ if (!isset($_GET['page'])) {
     <!-- End of Content Wrapper -->
 </div>
 <!-- End of Page Wrapper -->
+
+
+
+<!-- Confirmation modal -->
+<div class="modal fade" id="deleteDataModal" tabindex="-1" role="dialog" aria-labelledby="deleteDataModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 bg-transparent">
+            <div class="modal-body bg-light rounded-top">
+                <h5 class="text-center">Hapus data? data tidak akan bisa dipulihkan kembali.</h5>
+            </div>
+            <div class="btn-group" role="group">
+                <button class="btn btn-secondary w-100" type="button" data-dismiss="modal" style="border-bottom-left-radius: 5px;border-top-left-radius: 0px;">Tidak</button>
+                <button type="submit" name="submit" class="btn btn-primary w-100 font-weight-bold" id="deleteDataButton" form="" style="border-bottom-right-radius: 5px;border-top-right-radius: 0px;">Hapus</button>
+            </div>
+        </div>
+    </div>
+</div>
 <?php template('admin/footer'); ?>

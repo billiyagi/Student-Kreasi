@@ -1,30 +1,42 @@
 <?php
-
 require_once('system/bootstrap.php');
 
+
 /** 
- * Assignment Action
+ * Login Request
  */
-if (isset($_GET['assignment'])) {
-    $assignmentId = $_GET['assignment'];
 
-    if (isset($_GET['action']) && $assignmentId == 0) {
-        if ($_GET['action'] == 'create') {
+if (isset($_POST['login'])) {
 
+    // User Login Credentials
+    $usernameUserLogin = $antiXSS->xss_clean($_POST['username']);
+    $passwordUserLogin = $antiXSS->xss_clean($_POST['password']);
 
-            /** 
-             * Menghapus data assignment
-             */
-        }
+    // Temukan Akun pengguna
+    $user = $db->query("SELECT * FROM users WHERE username=:usernameLogin");
+    $user->bindParam(':usernameLogin', $usernameUserLogin);
+    $user->execute();
+    $userLogin = $user->fetch(PDO::FETCH_OBJ);
+
+    // Feedback ketika pengguna tidak ditemukan
+    if ($userLogin == false) {
+        setFlashMessage('Username / password salah', 'danger');
+        header('Location:index.php');
+        die();
     }
 
-
-
-    /** 
-     * Practice Acion
-     */
-} else {
-    header('Location:admin.php');
+    // Periksa password dan alihkan ketika password pengguna salah
+    if (password_verify($passwordUserLogin, $userLogin->password)) {
+        // Buat session pengguna
+        setUserSession($userLogin);
+        header('Location:admin.php');
+    } else {
+        setFlashMessage('Username / password salah', 'danger');
+        header('Location:index.php');
+    }
+} elseif (isset($_GET['session']) && $_GET['session'] == 'logout') {
+    removeUserSession();
+    header('Location:index.php');
 }
 
 

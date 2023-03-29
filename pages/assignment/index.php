@@ -23,17 +23,17 @@
                     foreach ($assignments as $assignment) : ?>
                         <tr>
                             <th scope="row"><?php echo $number ?></th>
-                            <td><?= $assignment->title; ?></td>
-                            <td><?= $assignment->subject; ?></td>
-                            <td><?= $assignment->created_at; ?></td>
+                            <td><?php echo $assignment->title; ?></td>
+                            <td><?php echo $assignment->subject; ?></td>
+                            <td><?php echo $assignment->created_at; ?></td>
                             <td>
                                 <div class="d-flex justify-content-center">
-                                    <a href="admin.php?page=action&data=update_assignment&id=<?= $assignment->id; ?>" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                    <a href="admin.php?page=view_assignment&id=<?= $assignment->id; ?>" class="btn btn-warning mx-2"><i class="fas fa-eye"></i></a>
-                                    <form action="progress.php?assignment=<?= $assignment->id; ?>&action=delete" method="post">
+                                    <a href="admin.php?page=action&data=update_assignment&id=<?php echo $assignment->id; ?>" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                    <a href="admin.php?page=view_assignment&id=<?php echo $assignment->id; ?>" class="btn btn-warning mx-2"><i class="fas fa-eye"></i></a>
+                                    <form action="progress.php?assignment=<?php echo $assignment->id; ?>&action=delete" method="post" id="deleteForm<?php echo $assignment->id; ?>">
                                         <input type="hidden" name="assignment" value="delete">
-                                        <input type="hidden" name="id" value="<?= $assignment->id; ?>">
-                                        <button type="submit" name="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                        <input type="hidden" name="id" value="<?php echo $assignment->id; ?>">
+                                        <button type="button" class="btn btn-danger delete-data-modal" data-toggle="modal" data-target="#deleteDataModal" data-id="<?php echo $assignment->id; ?>"><i class="fas fa-trash"></i></button>
                                     </form>
                                 </div>
                             </td>

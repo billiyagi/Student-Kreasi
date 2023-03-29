@@ -58,3 +58,30 @@ function validation($input, $format = 'empty')
             break;
     }
 }
+
+
+function setUserSession($user)
+{
+    $_SESSION['userKreasi'] = [
+        'name'  => $user->name,
+        'username'  => $user->username,
+        'email'  => $user->email,
+        'created_at'  => $user->created_at
+    ];
+}
+
+function removeUserSession()
+{
+    unset($_SESSION['userKreasi']);
+    session_unset();
+    session_destroy();
+}
+
+function getUserSession()
+{
+    if (empty($_SESSION['userKreasi'])) {
+        return false;
+    } else {
+        return $_SESSION['userKreasi'];
+    }
+}
