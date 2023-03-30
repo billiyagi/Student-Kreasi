@@ -1,11 +1,22 @@
 <?php
 
+/** 
+ * @param string $filename Nama file template
+ * @param string $options data yang dikirim ke file tujuan
+ * 
+ * * Menampilkan pecahan template
+ */
 function template($fileName, $options = array())
 {
     $options;
     return require_once('template/' . $fileName . '.php');
 }
 
+/** 
+ * @param string $menu
+ * @return string
+ * * Membuat menu aktif dengan menambahkan class css active
+ */
 function menuActive($menu)
 {
     if (isset($_GET['page'])) {
@@ -16,6 +27,13 @@ function menuActive($menu)
         return 'active';
     }
 }
+
+
+/** 
+ * @param string $menu
+ * @return string
+ * * Membuat sub menu aktif dengan menambahkan class css active
+ */
 function subMenuActive($menu)
 {
     if (isset($_GET['page'])) {
@@ -26,11 +44,22 @@ function subMenuActive($menu)
         return 'show';
     }
 }
+
+
+/** 
+ * @param string $message Isi pesan untuk notifikasi
+ * @param string $status Kondisi pesan notifikasi
+ * * Membuat session untuk menyimpan data notifikasi pesan
+ */
 function setFlashMessage($message, $status = 'success')
 {
     $_SESSION['flash_message'] = ['message' => $message, 'status' => $status];
 }
 
+
+/** 
+ * * Menampilkan Pesan notification dari session flash message
+ */
 function getFlashMessage()
 {
     if (isset($_SESSION['flash_message'])) {
@@ -46,6 +75,11 @@ function getFlashMessage()
 }
 
 
+/** 
+ * @param string $input Data inputan yang diberikan
+ * @param string $format kondisi yang akan dicek untuk data inputan
+ * * Memvalidasi data yang masuk dari $input dan memeriksanya sesuai dari $format
+ */
 function validation($input, $format = 'empty')
 {
     switch ($format) {
@@ -60,9 +94,14 @@ function validation($input, $format = 'empty')
 }
 
 
+/** 
+ * @param object $user Data full Object pengguna
+ * * Membuat session untuk pengguna yang berhasil login
+ */
 function setUserSession($user)
 {
     $_SESSION['userKreasi'] = [
+        'id'   => $user->id,
         'name'  => $user->name,
         'username'  => $user->username,
         'email'  => $user->email,
@@ -70,6 +109,11 @@ function setUserSession($user)
     ];
 }
 
+
+
+/** 
+ * * Menghapus semua session pengguna
+ */
 function removeUserSession()
 {
     unset($_SESSION['userKreasi']);
@@ -77,6 +121,11 @@ function removeUserSession()
     session_destroy();
 }
 
+
+/** 
+ * * Menampilkan session pengguna
+ * @return void false | User Session
+ */
 function getUserSession()
 {
     if (empty($_SESSION['userKreasi'])) {

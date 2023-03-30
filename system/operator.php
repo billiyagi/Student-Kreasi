@@ -38,7 +38,14 @@ $usersAll = $db->query("SELECT * FROM users");
 $usersAll->execute();
 $users = $usersAll->fetchAll(PDO::FETCH_OBJ);
 
-
+// Single user
+if (isset($_GET['data']) && $_GET['data'] == 'update_user') {
+    if (isset($_GET['id'])) {
+        $userSingle = $db->query('SELECT * FROM users WHERE id = ?');
+        $userSingle->execute([$_GET['id']]);
+        $user = $userSingle->fetchObject();
+    }
+}
 
 /** 
  * Cek halaman yang di akses
